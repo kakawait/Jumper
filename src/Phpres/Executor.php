@@ -84,7 +84,7 @@ class Executor
      *
      * @return mixed
      */
-    public function run(Closure $closure)
+    public function run(\Closure $closure)
     {
         try {
             if ($this->isLocalhost()) {
