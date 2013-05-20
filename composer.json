@@ -1,5 +1,5 @@
 {
-    "name": "kakawait/Phpres",
+    "name": "kakawait/phpres",
     "type": "library",
     "description": "A remote closure executor!",
     "keywords": ["closure", "executor", "remote"],
