@@ -17,6 +17,6 @@
         "herzult/php-ssh": "dev-master"
     },
     "autoload": {
-        "psr-0": { "PhpRes": "src/" }
+        "psr-0": { "Phpres": "src/" }
     }
 }
