@@ -4,6 +4,7 @@ namespace Phpres;
 
 use Ssh\Configuration;
 use Ssh\Session;
+use SuperClosure\SuperClosure;
 
 /**
  * Executor
@@ -83,12 +84,14 @@ class Executor
      *
      * @return mixed
      */
-    public function run($closure)
+    public function run(Closure $closure)
     {
         try {
             if ($this->isLocalhost()) {
                 return $closure();
             }
+
+            $closure = new SuperClosure($closure);
 
             $this->_communicator = $this->getCommunicator();
             $exec = $this->_communicator->getExec();
