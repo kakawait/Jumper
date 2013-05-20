@@ -1,0 +1,22 @@
+{
+    "name": "kakawait/Phpres",
+    "type": "library",
+    "description": "A remote closure executor!",
+    "keywords": ["closure", "executor", "remote"],
+    "homepage": "https://github.com/kakawait/phpres",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Thibaud Leprêtre"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.2",
+        "jeremeamia/functionparser": "dev-master",
+        "jeremeamia/SuperClosure": "dev-master",
+        "herzult/php-ssh": "dev-master"
+    },
+    "autoload": {
+        "psr-0": { "PhpRes": "src/" }
+    }
+}
