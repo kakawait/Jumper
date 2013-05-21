@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpres;
+namespace Jumper;
 
 use Ssh\Configuration;
 use Ssh\Session;
@@ -9,7 +9,7 @@ use SuperClosure\SuperClosure;
 /**
  * Executor
  *
- * @package Phpres
+ * @package Jumper
  * @author  Thibaud Leprêtre
  * @license MIT
  */
