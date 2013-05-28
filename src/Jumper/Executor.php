@@ -2,9 +2,9 @@
 
 namespace Jumper;
 
+use Jeremeamia\SuperClosure\SerializableClosure;
 use Ssh\Configuration;
 use Ssh\Session;
-use SuperClosure\SuperClosure;
 
 /**
  * Executor
@@ -91,7 +91,7 @@ class Executor
                 return $closure();
             }
 
-            $closure = new SuperClosure($closure);
+            $closure = new SerializableClosure($closure);
 
             $this->_communicator = $this->getCommunicator();
             $exec = $this->_communicator->getExec();
@@ -111,7 +111,6 @@ class Executor
             return $result;
         } catch (\Exception $e) {
             // Log somewhere todo
-
             throw $e;
         }
     }
