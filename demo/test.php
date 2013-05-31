@@ -15,4 +15,6 @@ $executor = new \Jumper\Executor(
         )
     )
 );
-echo $executor->run(function () {return exec('uname -a');});
+
+$array = array(1, 2, 3, 4);
+var_dump($executor->run(function() use ($array) {rsort($array); return $array;}));

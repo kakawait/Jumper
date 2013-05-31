@@ -99,16 +99,13 @@ class Executor
             $serialize = base64_encode(serialize($closure));
             $output = $exec->run(
                 sprintf(
-                    'php -r \'%s $c=unserialize(base64_decode("%s")); var_export($c());\'',
+                    'php -r \'%s $c=unserialize(base64_decode("%s")); echo serialize($c());\'',
                     $this->_getDependencies(),
                     $serialize
                 )
             );
 
-            $result = null;
-            eval("\$result = $output;");
-
-            return $result;
+            return unserialize($output);
         } catch (\Exception $e) {
             // Log somewhere todo
             throw $e;
