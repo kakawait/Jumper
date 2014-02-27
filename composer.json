@@ -12,9 +12,8 @@
     ],
     "require": {
         "php": ">=5.3.3",
-        "jeremeamia/SuperClosure": ">=0.9.1",
-        "nikic/php-parser": "dev-master",
-        "herzult/php-ssh": "0.1.*"
+        "jeremeamia/superclosure": "~1",
+        "phpseclib/phpseclib": "0.3.*"
     },
     "autoload": {
         "psr-0": { "Jumper": "src/" }

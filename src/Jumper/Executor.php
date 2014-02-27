@@ -3,8 +3,6 @@
 namespace Jumper;
 
 use Jeremeamia\SuperClosure\SerializableClosure;
-use Ssh\Configuration;
-use Ssh\Session;
 
 /**
  * Executor
@@ -15,64 +13,22 @@ use Ssh\Session;
  */
 class Executor
 {
-    /**
-     * Localhost host possibilities
-     *
-     * @var array
-     */
-    protected static $_localhost = array('localhost', '127.0.0.1', '::1', '0:0:0:0:0:0:0:1');
-
-    /**
-     * Options
-     *
-     * @var array
-     */
-    protected $_options = array(
-        'host' => '127.0.0.1',
-        'port' => '22',
-        'methods' => array(),
-        'callbacks' => array(),
-        'authentication' => array(
-            'class' => '\Ssh\Authentication\None',
-            'args' => array()
-        )
-    );
 
     /**
      * Ssh communicator
      *
      * @var
      */
-    protected $_communicator;
+    protected $communicator;
 
     /**
      * Constructor
      *
-     * @param array $options
+     * @param Communicator $communicator
      */
-    public function __construct(array $options = array())
+    public function __construct(Communicator $communicator)
     {
-        $this->_options = array_replace_recursive($this->_options, $options);
-    }
-
-    /**
-     * Get options
-     *
-     * @return array
-     */
-    public function getOptions()
-    {
-        return $this->_options;
-    }
-
-    /**
-     * Set options
-     *
-     * @param array $options
-     */
-    public function setOptions($options)
-    {
-        $this->_options = array_replace_recursive($this->_options, $options);
+        $this->communicator = $communicator;
     }
 
     /**
@@ -87,17 +43,14 @@ class Executor
     public function run(\Closure $closure)
     {
         try {
-            if ($this->isLocalhost()) {
-                return $closure();
-            }
-
             $closure = new SerializableClosure($closure);
 
-            $this->_communicator = $this->getCommunicator();
-            $exec = $this->_communicator->getExec();
+            if (!$this->communicator->isConnected()) {
+                $this->communicator->connect();
+            }
 
             $serialize = base64_encode(serialize($closure));
-            $output = $exec->run(
+            $output = $this->communicator->run(
                 sprintf(
                     'php -r \'%s $c=unserialize(base64_decode("%s")); echo serialize($c());\'',
                     $this->_getDependencies(),
@@ -107,39 +60,9 @@ class Executor
 
             return unserialize($output);
         } catch (\Exception $e) {
-            // Log somewhere todo
+            // todo Manage exception
             throw $e;
         }
-    }
-
-    /**
-     * Check if target is localhost
-     *
-     * @return bool
-     */
-    protected function isLocalhost()
-    {
-        return in_array($this->_options['host'], self::$_localhost);
-    }
-
-    /**
-     * Get ssh communicator
-     *
-     * @return \Ssh\Session
-     */
-    public function getCommunicator()
-    {
-        $configuration = new Configuration(
-            $this->_options['host'],
-            $this->_options['port'],
-            $this->_options['methods'],
-            $this->_options['callbacks']
-        );
-
-        $authentication = new \ReflectionClass($this->_options['authentication']['class']);
-        $authentication = $authentication->newInstanceArgs($this->_options['authentication']['args']);
-
-        return new Session($configuration, $authentication);
     }
 
     /**
