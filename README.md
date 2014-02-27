@@ -9,19 +9,11 @@ Allow you to execute closure remotly using super_closure from jeremeamia.
 
 require 'vendor/autoload.php';
 
-$executor = new Jumper\Executor(
-    array(
-        'host' => 'server.com',
-        'authentication' => array(
-            'class' => 'Ssh\Authentication\PublicKeyFile',
-            'args' => array(
-                'root',
-                '~/.ssh/id_rsa.pub',
-                '~/.ssh/id_rsa'
-            )
-        )
-    )
-);
+$authentication = new \Jumper\Communicator\Authentication\Rsa('root', $_SERVER['HOME'] . '/.ssh/id_rsa');
+$communicator = new \Jumper\Communicator\Ssh(array('host' => '127.0.0.1'));
+$communicator->setAuthentication($authentication);
+
+$executor = new \Jumper\Executor($communicator);
 
 $executor->run(
     function() {
