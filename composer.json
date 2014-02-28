@@ -13,7 +13,8 @@
     "require": {
         "php": ">=5.3.3",
         "jeremeamia/superclosure": "~1",
-        "phpseclib/phpseclib": "0.3.*"
+        "phpseclib/phpseclib": "0.3.*",
+        "kakawait/tiny-php": "dev-master"
     },
     "autoload": {
         "psr-0": { "Jumper": "src/" }

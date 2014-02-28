@@ -3,6 +3,7 @@
 namespace Jumper;
 
 use Jeremeamia\SuperClosure\SerializableClosure;
+use TinyPHP\Minifier;
 
 /**
  * Executor
@@ -53,7 +54,7 @@ class Executor
             $output = $this->communicator->run(
                 sprintf(
                     'php -r \'%s $c=unserialize(base64_decode("%s")); echo serialize($c());\'',
-                    $this->_getDependencies(),
+                    $this->getClosureUnserializerAsString(),
                     $serialize
                 )
             );
@@ -70,9 +71,15 @@ class Executor
      *
      * @return string
      */
-    protected function _getDependencies()
+    protected function getClosureUnserializerAsString()
     {
-        return file_get_contents(__DIR__ . '/unserializer.php.raw');
+        $class = new \ReflectionClass(new SerializableClosure(function() {}));
+        $src = Minifier::getTiny(file_get_contents($class->getFileName()), false);
+
+        // remove <?php tag
+        $src = substr($src, strpos($src, 'namespace'));
+
+        return $src;
     }
 
 }
