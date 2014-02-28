@@ -1,8 +1,9 @@
 # Jumper
 
-Note: The project was not update since several month due to some change on my professional life. From now, I will rework on this project with the first mission: big refactoring :)
+Allow you to execute PHP Closure in other distant computer via SSH and without client/server setup.
 
-Allow you to execute closure remotly using super_closure from jeremeamia.
+Source computer dependency: PHP >= 5.3 (so might work on windows but untested)
+Target computer dependencies: PHP >= 5.3, SSHd
 
 ```php
 <?php
@@ -13,7 +14,7 @@ $authentication = new \Jumper\Communicator\Authentication\Rsa('root', $_SERVER['
 $communicator = new \Jumper\Communicator\Ssh(array('host' => '127.0.0.1'));
 $communicator->setAuthentication($authentication);
 
-$executor = new \Jumper\Executor($communicator);
+$executor = new \Jumper\Executor($communicator, new Jumper\Stringifier\Json());
 
 $executor->run(
     function() {
