@@ -3,6 +3,7 @@
 namespace Jumper\Communicator;
 
 use Jumper\Communicator;
+use Jumper\Exception\CommunicatorException;
 use Net_SSH2 as Ssh2Client;
 
 /**
@@ -14,6 +15,9 @@ use Net_SSH2 as Ssh2Client;
  */
 class Ssh implements Communicator
 {
+    /**
+     * @var \Net_SSH2
+     */
     private $ssh;
 
     /**
@@ -21,6 +25,9 @@ class Ssh implements Communicator
      */
     private $authentication;
 
+    /**
+     * @var array
+     */
     private $defaultOptions = array(
         'host' => '127.0.0.1',
         'port' => '22',
@@ -29,6 +36,9 @@ class Ssh implements Communicator
         'callbacks' => array()
     );
 
+    /**
+     * @param array $options
+     */
     public function __construct(array $options = array())
     {
         $this->defaultOptions = array_replace_recursive($this->defaultOptions, $options);
@@ -39,34 +49,69 @@ class Ssh implements Communicator
         );
     }
 
+    /**
+     *
+     */
     public function __destruct()
     {
         $this->close();
     }
 
+    /**
+     * @param Authentication $authentication
+     */
     public function setAuthentication(Authentication $authentication)
     {
         $this->authentication = $authentication;
     }
 
-    public function isConnected() {
+    /**
+     * @return bool
+     */
+    public function isConnected()
+    {
         return !is_null($this->ssh) && $this->ssh->isConnected();
     }
 
+    /**
+     * @throws \Jumper\Exception\CommunicatorException
+     */
     public function connect()
     {
         $authentication = null;
         if (!is_null($this->authentication)) {
             $authentication = $this->authentication->getAuthentication($this->ssh);
         }
-        return $this->ssh->login($this->authentication->getUser(), $authentication);
+        if (!$this->ssh->login($this->authentication->getUser(), $authentication)) {
+            throw new CommunicatorException($this->ssh->getLastError(), $this->ssh->getExitStatus());
+        }
     }
 
+    /**
+     * @param $command
+     *
+     * @throws \RuntimeException
+     * @throws \Jumper\Exception\CommunicatorException
+     * @return String
+     */
     public function run($command)
     {
-        return $this->ssh->exec($command);
+        $result = $this->ssh->exec($command);
+        if ($result === false) {
+            throw new CommunicatorException($this->ssh->getLastError(), $this->ssh->getExitStatus());
+        }
+
+        $error = $this->ssh->getStdError();
+        if (!empty($error)) {
+            throw new \RuntimeException($this->ssh->getStdError(), $this->ssh->getExitStatus());
+        }
+
+        return $result;
     }
 
+    /**
+     *
+     */
     public function close()
     {
         $this->ssh->disconnect();
