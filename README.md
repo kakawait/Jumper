@@ -1,6 +1,6 @@
 # Jumper
 
-[![Dependency Status](https://gemnasium.com/kakawait/Jumper.png)](https://gemnasium.com/kakawait/Jumper)
+[![Dependency Status](http://depending.in/kakawait/Jumper.png)](http://depending.in/kakawait/Jumper)
 
 Allow you to execute PHP Closure in other distant computer via SSH and without client/server setup.
 
