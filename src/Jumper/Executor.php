@@ -80,11 +80,6 @@ class Executor
         }
     }
 
-    protected function isPhpError($string)
-    {
-        return strpos($string, 'PHP Notice:', 1);
-    }
-
     /**
      * Unserializer source code that is mandatory to unserialize object
      *
