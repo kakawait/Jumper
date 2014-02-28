@@ -6,7 +6,7 @@ $authentication = new \Jumper\Communicator\Authentication\Rsa('root', $_SERVER['
 $communicator = new \Jumper\Communicator\Ssh(array('host' => '127.0.0.1'));
 $communicator->setAuthentication($authentication);
 
-$executor = new \Jumper\Executor($communicator);
+$executor = new \Jumper\Executor($communicator, new Jumper\Stringifier\Json());
 
 $array = array(2, 1, 4, 3);
 var_dump($executor->run(function() use ($array) {rsort($array); return $array;}));

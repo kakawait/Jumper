@@ -18,18 +18,27 @@ class Executor
     /**
      * Ssh communicator
      *
-     * @var
+     * @var Communicator
      */
     protected $communicator;
+
+    /**
+     * Stringifier
+     *
+     * @var Stringifier
+     */
+    protected $stringifier;
 
     /**
      * Constructor
      *
      * @param Communicator $communicator
+     * @param Stringifier $stringifier
      */
-    public function __construct(Communicator $communicator)
+    public function __construct(Communicator $communicator, Stringifier $stringifier)
     {
         $this->communicator = $communicator;
+        $this->stringifier = $stringifier;
     }
 
     /**
@@ -53,13 +62,14 @@ class Executor
             $serialize = base64_encode(serialize($closure));
             $output = $this->communicator->run(
                 sprintf(
-                    'php -r \'%s $c=unserialize(base64_decode("%s")); echo serialize($c());\'',
+                    'php -r \'%s $c=unserialize(base64_decode("%s")); echo %s($c());\'',
                     $this->getClosureUnserializerAsString(),
-                    $serialize
+                    $serialize,
+                    $this->stringifier->getSerializeFunctionName()
                 )
             );
 
-            return unserialize($output);
+            return $this->stringifier->toObject($output);
         } catch (\Exception $e) {
             // todo Manage exception
             throw $e;
