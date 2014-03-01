@@ -70,7 +70,7 @@ class Ssh implements Communicator
      */
     public function isConnected()
     {
-        return !is_null($this->ssh) && $this->ssh->isConnected();
+        return $this->ssh->isConnected();
     }
 
     /**
@@ -79,9 +79,7 @@ class Ssh implements Communicator
     public function connect()
     {
         $authentication = null;
-        if (!is_null($this->authentication)) {
-            $authentication = $this->authentication->getAuthentication($this->ssh);
-        }
+        $authentication = $this->authentication->getAuthentication($this->ssh);
         if (!$this->ssh->login($this->authentication->getUser(), $authentication)) {
             throw new CommunicatorException($this->ssh->getLastError(), $this->ssh->getExitStatus());
         }
