@@ -13,10 +13,10 @@
     "require": {
         "php": ">=5.3.3",
         "jeremeamia/superclosure": "~1",
-        "phpseclib/phpseclib": "0.3.*",
+        "phpseclib/phpseclib": "~0.3",
         "kakawait/tiny-php": "0.0.1",
-        "phpunit/phpunit": "3.7.*",
-        "mockery/mockery": "0.9.*"
+        "phpunit/phpunit": "~3.7",
+        "mockery/mockery": "~0.9"
     },
     "autoload": {
         "psr-0": { "Jumper": "src/" }
