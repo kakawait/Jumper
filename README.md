@@ -1,6 +1,6 @@
 # Jumper
 
-[![Dependency Status](http://depending.in/kakawait/Jumper.png)](http://depending.in/kakawait/Jumper)
+[![Build Status](https://travis-ci.org/kakawait/Jumper.png?branch=master)](https://travis-ci.org/kakawait/Jumper)[![Dependency Status](http://depending.in/kakawait/Jumper.png)](http://depending.in/kakawait/Jumper)
 
 Allow you to execute PHP Closure in other distant computer via SSH and without client/server setup.
 
