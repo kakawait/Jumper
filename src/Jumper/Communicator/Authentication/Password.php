@@ -11,7 +11,8 @@ use Jumper\Communicator\Authentication;
  * @author  Thibaud Leprêtre
  * @license MIT
  */
-class Password implements Authentication {
+class Password implements Authentication
+{
 
     /**
      * @var string user

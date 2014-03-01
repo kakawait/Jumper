@@ -12,7 +12,8 @@ use Crypt_RSA as RsaKey;
  * @author  Thibaud Leprêtre
  * @license MIT
  */
-class Rsa implements Authentication{
+class Rsa implements Authentication
+{
 
     /**
      * @var string user

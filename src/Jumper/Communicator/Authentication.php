@@ -9,7 +9,8 @@ namespace Jumper\Communicator;
  * @author  Thibaud Leprêtre
  * @license MIT
  */
-interface Authentication {
+interface Authentication
+{
 
     /**
      * @return mixed Authentication object

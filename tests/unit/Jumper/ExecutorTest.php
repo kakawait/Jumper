@@ -2,7 +2,8 @@
 
 use \Mockery as m;
 
-class ExecutorTest extends PHPUnit_Framework_TestCase {
+class ExecutorTest extends PHPUnit_Framework_TestCase
+{
 
     /**
      * @var \Mockery\MockInterface

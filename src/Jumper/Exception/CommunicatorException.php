@@ -9,6 +9,7 @@ namespace Jumper\Exception;
  * @author  Thibaud Leprêtre
  * @license MIT
  */
-class CommunicatorException extends \Exception {
+class CommunicatorException extends \Exception
+{
 
 } 
