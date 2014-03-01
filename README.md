@@ -1,6 +1,6 @@
 # Jumper
 
-[![Build Status](https://travis-ci.org/kakawait/Jumper.png?branch=master)](https://travis-ci.org/kakawait/Jumper) [![Dependency Status](https://www.versioneye.com/user/projects/5312482bec13759c230000da/badge.png)](https://www.versioneye.com/user/projects/5312482bec13759c230000da)
+[![Build Status](https://travis-ci.org/kakawait/Jumper.png?branch=master)](https://travis-ci.org/kakawait/Jumper) [![Coverage Status](https://coveralls.io/repos/kakawait/Jumper/badge.png?branch=master)](https://coveralls.io/r/kakawait/Jumper?branch=master) [![Dependency Status](https://www.versioneye.com/user/projects/5312482bec13759c230000da/badge.png)](https://www.versioneye.com/user/projects/5312482bec13759c230000da)
 
 Allow you to execute PHP Closure in other distant computer via SSH and without client/server setup.
 
