@@ -17,6 +17,14 @@ class VarExportEvalTest extends PHPUnit_Framework_TestCase
     /**
      * @test
      */
+    public function getSerializeFunctionNameShouldReturnNativeSerializerFunctionName()
+    {
+        $this->assertEquals('var_export', $this->stringifier->getSerializeFunctionName());
+    }
+
+    /**
+     * @test
+     */
     public function nullSerializationExpected()
     {
         $this->assertEquals('NULL', $this->stringifier->toString(null));

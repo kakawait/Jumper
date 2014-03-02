@@ -17,6 +17,14 @@ class NativeTest extends PHPUnit_Framework_TestCase
     /**
      * @test
      */
+    public function getSerializeFunctionNameShouldReturnNativeSerializerFunctionName()
+    {
+        $this->assertEquals('serialize', $this->stringifier->getSerializeFunctionName());
+    }
+
+    /**
+     * @test
+     */
     public function nullSerializationExpected()
     {
         $this->assertEquals('N;', $this->stringifier->toString(null));

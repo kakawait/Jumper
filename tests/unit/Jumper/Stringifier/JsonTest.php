@@ -17,6 +17,14 @@ class JsonTest extends PHPUnit_Framework_TestCase
     /**
      * @test
      */
+    public function getSerializeFunctionNameShouldReturnNativeSerializerFunctionName()
+    {
+        $this->assertEquals('json_encode', $this->stringifier->getSerializeFunctionName());
+    }
+
+    /**
+     * @test
+     */
     public function nullSerializationExpected()
     {
         $this->assertEquals('null', $this->stringifier->toString(null));
