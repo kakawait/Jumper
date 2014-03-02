@@ -37,10 +37,12 @@ class Ssh implements Communicator
     );
 
     /**
+     * @param Authentication $authentication
      * @param array $options
      */
-    public function __construct(array $options = array())
+    public function __construct(Authentication $authentication, array $options = array())
     {
+        $this->authentication = $authentication;
         $this->defaultOptions = array_replace_recursive($this->defaultOptions, $options);
         $this->ssh = new Ssh2Client(
             $this->defaultOptions['host'],
@@ -58,14 +60,6 @@ class Ssh implements Communicator
     }
 
     /**
-     * @param Authentication $authentication
-     */
-    public function setAuthentication(Authentication $authentication)
-    {
-        $this->authentication = $authentication;
-    }
-
-    /**
      * @return bool
      */
     public function isConnected()
@@ -78,7 +72,6 @@ class Ssh implements Communicator
      */
     public function connect()
     {
-        $authentication = null;
         $authentication = $this->authentication->getAuthentication($this->ssh);
         if (!$this->ssh->login($this->authentication->getUser(), $authentication)) {
             throw new CommunicatorException($this->ssh->getLastError(), $this->ssh->getExitStatus());
@@ -101,7 +94,7 @@ class Ssh implements Communicator
 
         $error = $this->ssh->getStdError();
         if (!empty($error)) {
-            throw new \RuntimeException($this->ssh->getStdError(), $this->ssh->getExitStatus());
+            throw new \RuntimeException($error, $this->ssh->getExitStatus());
         }
 
         return $result;

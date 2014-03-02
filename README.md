@@ -14,8 +14,7 @@ Target computer dependencies: PHP >= 5.3, SSHd
 require 'vendor/autoload.php';
 
 $authentication = new \Jumper\Communicator\Authentication\Rsa('root', $_SERVER['HOME'] . '/.ssh/id_rsa');
-$communicator = new \Jumper\Communicator\Ssh(array('host' => '127.0.0.1'));
-$communicator->setAuthentication($authentication);
+$communicator = new \Jumper\Communicator\Ssh($authentication, array('host' => '127.0.0.1'));
 
 $executor = new \Jumper\Executor($communicator, new Jumper\Stringifier\Json());
 

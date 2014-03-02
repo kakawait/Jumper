@@ -13,7 +13,7 @@ use Jumper\Communicator\Authentication;
  */
 interface Communicator
 {
-    public function setAuthentication(Authentication $authentication);
+    public function __construct(Authentication $authentication, array $options = array());
 
     public function isConnected();
 
