@@ -44,7 +44,7 @@ class Rsa extends AbstractAuthentication implements Authentication
     {
         $key = new RsaKey();
         $key->loadKey(file_get_contents($this->key));
-        if (!isNull($this->password)) {
+        if (!is_null($this->password)) {
             $key->setPassword($this->password);
         }
         return $key;
