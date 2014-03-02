@@ -77,6 +77,17 @@ class ExecutorTest extends PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @expectedException \Exception
+     */
+    public function exceptionShouldBeRethrowIfOccur()
+    {
+        $this->communicator->shouldReceive('isConnected')->withNoArgs()->andThrow('\Exception')->once()->ordered();
+
+        $this->executor->run(function() {});
+    }
+
+    /**
+     * @test
      */
     public function formattedCommandShouldBeSend()
     {
