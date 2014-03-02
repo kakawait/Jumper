@@ -23,11 +23,14 @@ class VarExportEval implements Stringifier
 
     public function toString($object)
     {
-        var_export($object);
+        return var_export($object, true);
     }
 
     public function toObject($string)
     {
-        eval($string);
+        $result = null;
+        eval("\$result = $string;");
+
+        return $result;
     }
 }
