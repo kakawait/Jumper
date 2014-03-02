@@ -11,16 +11,15 @@ use Jumper\Communicator\Authentication;
  * @author  Thibaud Leprêtre
  * @license MIT
  */
-class None implements Authentication
+class None extends AbstractAuthentication implements Authentication
 {
-    /**
-     * @var string user
-     */
-    private $user;
 
+    /**
+     * @param string $user
+     */
     public function __construct($user)
     {
-        $this->user = $user;
+        parent::__construct($user);
     }
 
     /**
@@ -31,11 +30,4 @@ class None implements Authentication
         return null;
     }
 
-    /**
-     * @return string user
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
 }

@@ -12,13 +12,8 @@ use Crypt_RSA as RsaKey;
  * @author  Thibaud Leprêtre
  * @license MIT
  */
-class Rsa implements Authentication
+class Rsa extends AbstractAuthentication implements Authentication
 {
-
-    /**
-     * @var string user
-     */
-    private $user;
 
     /**
      * @var string rsa key path
@@ -37,7 +32,7 @@ class Rsa implements Authentication
      */
     public function __construct($user, $key, $password = null)
     {
-        $this->user = $user;
+        parent::__construct($user);
         $this->key = $key;
         $this->password = $password;
     }
@@ -49,14 +44,10 @@ class Rsa implements Authentication
     {
         $key = new RsaKey();
         $key->loadKey(file_get_contents($this->key));
+        if (!isNull($this->password)) {
+            $key->setPassword($this->password);
+        }
         return $key;
     }
 
-    /**
-     * @return string user
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
 }

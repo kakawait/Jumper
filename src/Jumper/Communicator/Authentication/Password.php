@@ -11,13 +11,8 @@ use Jumper\Communicator\Authentication;
  * @author  Thibaud Leprêtre
  * @license MIT
  */
-class Password implements Authentication
+class Password extends AbstractAuthentication implements Authentication
 {
-
-    /**
-     * @var string user
-     */
-    private $user;
 
     /**
      * @var string password
@@ -26,27 +21,20 @@ class Password implements Authentication
 
     /**
      * @param string $user
-     * @param $password
+     * @param string $password
      */
-    public function _construct($user, $password)
+    public function __construct($user, $password)
     {
-        $this->user = $user;
+        parent::__construct($user);
         $this->password = $password;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getAuthentication()
     {
         return $this->password;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
 }
