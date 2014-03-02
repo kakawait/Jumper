@@ -59,14 +59,35 @@ class ExecutorTest extends PHPUnit_Framework_TestCase
     /**
      * @test
      * @expectedException \Jumper\Exception\ExecutorException
+     * @expectedExceptionMessage An error occurs when execution php on target host with the following message: Runtime message error
      */
     public function remotePhpErrorShouldThrowExecutorException()
     {
         $this->communicator->shouldReceive('isConnected')->withNoArgs()->andReturn(true)->once()->ordered();
-        $this->communicator->shouldReceive('run')->with(m::type('string'))->andThrow('\RuntimeException')->once()
+        $this->communicator->shouldReceive('run')
+                           ->with(m::type('string'))
+                           ->andThrow('\RuntimeException', 'Runtime message error')
+                           ->once()
                            ->ordered();
 
         $this->stringifier->shouldReceive('getSerializeFunctionName')->withNoArgs()->once()->ordered();
+
+        $this->executor->run(function() {});
+    }
+
+    /**
+     * @test
+     */
+    public function formattedCommandShouldBeSend()
+    {
+        $this->communicator->shouldReceive('isConnected')->withNoArgs()->andReturn(true)->once()->ordered();
+        $this->communicator->shouldReceive('run')
+                           ->with('/php -r \'.+? \$c=unserialize\(base64_decode\("[A-Za-z0-9+\/]+?"\)\); echo json_encode\(\$c\(\)\);\'/')
+                           ->andReturn('result')
+                           ->once()
+                           ->ordered();
+        $this->stringifier->shouldReceive('getSerializeFunctionName')->andReturn('json_encode')->once()->ordered();
+        $this->stringifier->shouldReceive('toObject')->andReturn('result')->once()->ordered();
 
         $this->executor->run(function() {});
     }
