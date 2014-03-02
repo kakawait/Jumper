@@ -5,7 +5,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 $authentication = new \Jumper\Communicator\Authentication\Rsa('root', $_SERVER['HOME'] . '/.ssh/id_rsa');
 $communicator = new \Jumper\Communicator\Ssh($authentication, array('host' => '127.0.0.1'));
 
-$executor = new \Jumper\Executor($communicator, new Jumper\Stringifier\Json());
+$executor = new \Jumper\Executor($communicator, new Jumper\Stringifier\Native());
 
 $array = array(2, 1, 4, 3);
 var_dump($executor->run(function() use ($array) {rsort($array); return $array;}));

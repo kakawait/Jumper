@@ -37,6 +37,9 @@ class RsaTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($rsa->password);
     }
 
+    /**
+     * @test
+     */
     public function passwordShouldBeAddToRsaIfPasswordPassed()
     {
         vfsStream::newFile('id_rsa')->at(vfsStreamWrapper::getRoot());

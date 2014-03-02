@@ -16,7 +16,7 @@ require 'vendor/autoload.php';
 $authentication = new \Jumper\Communicator\Authentication\Rsa('root', $_SERVER['HOME'] . '/.ssh/id_rsa');
 $communicator = new \Jumper\Communicator\Ssh($authentication, array('host' => '127.0.0.1'));
 
-$executor = new \Jumper\Executor($communicator, new Jumper\Stringifier\Json());
+$executor = new \Jumper\Executor($communicator, new Jumper\Stringifier\Native());
 
 $executor->run(
     function() {

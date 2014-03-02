@@ -2,6 +2,7 @@
 
 namespace Jumper\Stringifier;
 
+use Jumper\Exception\StringifierException;
 use Jumper\Stringifier;
 
 /**
@@ -23,6 +24,14 @@ class VarExportEval implements Stringifier
 
     public function toString($object)
     {
+        if (is_object($object)) {
+            throw new StringifierException(
+                get_class($this). ' has a limited support. '
+                . 'Object serialization is not possible. '
+                . 'Consider using \Jumper\Stringifier\Native stringifier.'
+            );
+        }
+
         return var_export($object, true);
     }
 
