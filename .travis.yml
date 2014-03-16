@@ -15,7 +15,9 @@ script:
   - phpunit --coverage-clover build/logs/clover.xml
 
 after_script:
-  - php vendor/bin/coveralls -v
+  - vendor/bin/phpunit --verbose --coverage-clover=coverage.clover
+  - wget https://scrutinizer-ci.com/ocular.phar
+  - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
 
 matrix:
   allow_failures:
