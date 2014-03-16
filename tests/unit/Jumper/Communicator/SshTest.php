@@ -100,7 +100,6 @@ class SshTest extends PHPUnit_Framework_TestCase
      * @test
      * @expectedException \Jumper\Exception\CommunicatorException
      * @expectedExceptionMessage Client error message
-     * @expectedExceptionCode 1
      */
     public function failConnectionShouldThrowAnExceptionWithSshClientErrorAsMessage()
     {
@@ -108,7 +107,6 @@ class SshTest extends PHPUnit_Framework_TestCase
         $this->authentication->shouldReceive('getUser')->andReturn('root')->withNoArgs()->once()->ordered();
         $this->ssh->shouldReceive('login')->with('root', m::any())->andReturn(false)->once()->ordered();
         $this->ssh->shouldReceive('getLastError')->withNoArgs()->andReturn('Client error message')->once()->ordered();
-        $this->ssh->shouldReceive('getExitStatus')->withNoArgs()->andReturn(1)->once()->ordered();
 
         $this->communicator->connect();
     }
@@ -117,7 +115,6 @@ class SshTest extends PHPUnit_Framework_TestCase
      * @test
      * @expectedException \Jumper\Exception\CommunicatorException
      * @expectedExceptionMessage Client error message
-     * @expectedExceptionCode 1
      */
     public function communicatorExceptionShouldBeThrowIfExecReturnFalse()
     {
@@ -125,7 +122,6 @@ class SshTest extends PHPUnit_Framework_TestCase
 
         $this->ssh->shouldReceive('exec')->with($command)->andReturn(false)->once()->ordered();
         $this->ssh->shouldReceive('getLastError')->withNoArgs()->andReturn('Client error message')->once()->ordered();
-        $this->ssh->shouldReceive('getExitStatus')->withNoArgs()->andReturn(1)->once()->ordered();
 
         $this->communicator->run($command);
     }
@@ -134,7 +130,6 @@ class SshTest extends PHPUnit_Framework_TestCase
      * @test
      * @expectedException \RuntimeException
      * @expectedExceptionMessage Std error message
-     * @expectedExceptionCode 1
      */
     public function runtimeExceptionShouldBeThrowIfErrorOccursOnTarget()
     {
@@ -142,7 +137,6 @@ class SshTest extends PHPUnit_Framework_TestCase
 
         $this->ssh->shouldReceive('exec')->with($command)->andReturn(true)->once()->ordered();
         $this->ssh->shouldReceive('getStdError')->withNoArgs()->andReturn('Std error message')->once()->ordered();
-        $this->ssh->shouldReceive('getExitStatus')->withNoArgs()->andReturn(1)->once()->ordered();
 
         $this->communicator->run($command);
 
