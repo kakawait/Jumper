@@ -74,7 +74,7 @@ class Ssh implements Communicator
     {
         $authentication = $this->authentication->getAuthentication($this->ssh);
         if (!$this->ssh->login($this->authentication->getUser(), $authentication)) {
-            throw new CommunicatorException($this->ssh->getLastError(), $this->ssh->getExitStatus());
+            throw new CommunicatorException($this->ssh->getLastError());
         }
     }
 
@@ -89,12 +89,12 @@ class Ssh implements Communicator
     {
         $result = $this->ssh->exec($command);
         if ($result === false) {
-            throw new CommunicatorException($this->ssh->getLastError(), $this->ssh->getExitStatus());
+            throw new CommunicatorException($this->ssh->getLastError());
         }
 
         $error = $this->ssh->getStdError();
         if (!empty($error)) {
-            throw new \RuntimeException($error, $this->ssh->getExitStatus());
+            throw new \RuntimeException($error);
         }
 
         return $result;
