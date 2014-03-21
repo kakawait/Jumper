@@ -18,9 +18,26 @@ $communicator = new \Jumper\Communicator\Ssh($authentication, array('host' => '1
 
 $executor = new \Jumper\Executor($communicator, new Jumper\Stringifier\Native());
 
-$executor->run(
-    function() {
-        // Closure code
+$array = array(2, 1, 4, 3);
+$rsortedArray = $executor->run(
+    function() use ($array) {
+        rsort($array); 
+        return $array;
     }
 );
+
+var_dump($rsortedArray);
+// should print
+/*
+array(4) {
+  [0]=>
+  int(4)
+  [1]=>
+  int(3)
+  [2]=>
+  int(2)
+  [3]=>
+  int(1)
+}
+*/
 ```
