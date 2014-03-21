@@ -14,10 +14,12 @@
         "php": ">=5.3.3",
         "jeremeamia/superclosure": "~1",
         "phpseclib/phpseclib": "~0.3",
-        "kakawait/tiny-php": "0.0.1",
+        "kakawait/tiny-php": "0.0.1"
+    },
+    "require-dev": {
         "phpunit/phpunit": "~4",
         "mockery/mockery": "~0.9",
-        "mikey179/vfsStream": "v1.2.0"
+        "mikey179/vfsStream": "~1.2"
     },
     "autoload": {
         "psr-0": { "Jumper": "src/" }
